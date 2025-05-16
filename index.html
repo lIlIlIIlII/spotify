@@ -31,12 +31,15 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    h2 
+    {
       text-align: center;
-      color: #4CAF50;
+      color: #222;
+      margin-bottom: 20px;
     }
 
-    ul {
+    ul 
+    {
       list-style: none;
       padding: 0;
     }
@@ -70,26 +73,31 @@
 </head>
 <body>
   <header>
-    <h1>🎵 Tracce MP3 dal Feed RSS</h1>
+    <h1>Podcast RSS Feed</h1>
   </header>
 
   <main>
+    <h2>Elenco Tracce</h2>
     <ul id="lista"></ul>
   </main>
 
   <script>
     const rss = 'https://anchor.fm/s/104f1d2cc/podcast/rss';
     const xhr = new XMLHttpRequest();
+
     xhr.open('GET', rss);
+
     xhr.onload = function() 
     {
       if (xhr.status === 200) 
       {
         const xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+        
         xml.querySelectorAll('item').forEach(i => 
-          {
+        {
           const t = i.querySelector('title').textContent;
           const u = i.querySelector('enclosure')?.getAttribute('url');
+
           if (u) 
           {
             const li = document.createElement('li');
@@ -99,6 +107,7 @@
         });
       }
     };
+
     xhr.send();
   </script>
 </body>
